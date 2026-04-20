@@ -5,6 +5,7 @@ let estado = {
   filtros: {
     años: [2021, 2024],
     estado: null,
+    estadoB: null,
     sexo: null,
     grupoEda: null,
     tiposDefecto: [],
@@ -34,6 +35,12 @@ export function setEstadoSeleccionado(nombre) {
   notificar("filtros");
 }
 
+export function setEstadoComparacion(nombre) {
+  estado.filtros.estadoB = nombre || null;
+  notificar("filtros");
+}
+
+
 export function setRangoAños(min, max) {
   if (min > max) [min, max] = [max, min];
   estado.filtros.años = [Number(min), Number(max)];
@@ -62,10 +69,12 @@ export function resetFiltros() {
   estado.filtros = {
     años: [2021, 2024],
     estado: null,
+    estadoB: null,
     sexo: null,
     grupoEda: null,
     tiposDefecto: [],
   };
+
   notificar("filtros");
 }
 

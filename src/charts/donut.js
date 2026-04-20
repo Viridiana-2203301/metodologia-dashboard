@@ -28,6 +28,12 @@ export function renderDonut(selector, datos, estadoSeleccionado) {
     d3.select(this).transition().duration(150).attr("d", arc);
   });
 
+  const total = d3.sum(filtered, (d) => d.cantidad);
+  g.selectAll("text.pie-label").data(pie).join("text").attr("class", "pie-label").attr("transform", (d) => `translate(${arc.centroid(d)})`).attr("text-anchor", "middle").attr("fill", "#fff").style("font-size", "11px").style("font-weight", "700").style("pointer-events", "none").text((d) => {
+    const pct = (d.data.cantidad / total) * 100;
+    return pct > 5 ? `${pct.toFixed(0)}%` : "";
+  });
+
   const legend = contenedor.append("div").attr("class", "legend-grid");
   filtered.forEach((item, index) => {
     const row = legend.append("button").attr("type", "button").attr("class", "legend-item");

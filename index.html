@@ -56,6 +56,27 @@
         <span class="filter-title">Tipos de defecto</span>
         <div id="chips-tipos-defecto" class="chip-group" role="list"></div>
       </div>
+
+      <div class="filter-card">
+        <div class="filter-header">
+          <span class="filter-icon">📍</span>
+          <label for="filtro-estado">Estado Principal</label>
+        </div>
+        <select id="filtro-estado" class="select-field">
+          <option value="">Nacional</option>
+        </select>
+      </div>
+
+      <div class="filter-card">
+        <div class="filter-header">
+          <span class="filter-icon">⚖️</span>
+          <label for="filtro-estado-b">Comparar con...</label>
+        </div>
+        <select id="filtro-estado-b" class="select-field">
+          <option value="">Sin comparar</option>
+        </select>
+      </div>
+
     </section>
 
     <main class="dashboard-grid" id="dashboard-root">
@@ -69,32 +90,68 @@
       </section>
 
       <section class="chart-card chart-card-wide skeleton" id="map-card">
-        <h2>Mapa coroplético por estado</h2>
+        <div class="card-header">
+          <h2>Mapa coroplético por estado</h2>
+          <div class="export-actions">
+            <button class="mini-btn export-btn" data-target="map-card" data-format="png">PNG</button>
+            <button class="mini-btn export-btn" data-target="map-card" data-format="jpg">JPG</button>
+          </div>
+        </div>
         <div id="mapa-mexico" class="chart-panel"></div>
       </section>
 
+
       <section class="chart-card skeleton" id="top-card">
         <div class="card-header">
-          <h2>Top 15 estados por tasa</h2>
-          <button id="orden-toggle" class="mini-btn">Descendente</button>
+
+          <div>
+            <h2>Top 15 estados por tasa</h2>
+            <button id="orden-toggle" class="mini-btn">Descendente</button>
+          </div>
+          <div class="export-actions">
+            <button class="mini-btn export-btn" data-target="top-card" data-format="png">PNG</button>
+            <button class="mini-btn export-btn" data-target="top-card" data-format="jpg">JPG</button>
+          </div>
         </div>
         <div id="top-estados" class="chart-panel"></div>
       </section>
 
+
       <section class="chart-card skeleton" id="line-card">
-        <h2>Tendencia temporal</h2>
+        <div class="card-header">
+          <h2>Tendencia temporal</h2>
+          <div class="export-actions">
+            <button class="mini-btn export-btn" data-target="line-card" data-format="png">PNG</button>
+            <button class="mini-btn export-btn" data-target="line-card" data-format="jpg">JPG</button>
+          </div>
+        </div>
         <div id="linea-tendencia" class="chart-panel"></div>
       </section>
 
+
       <section class="chart-card skeleton" id="donut-card">
-        <h2>Distribución por tipo de defecto</h2>
+        <div class="card-header">
+          <h2>Distribución por tipo de defecto</h2>
+          <div class="export-actions">
+            <button class="mini-btn export-btn" data-target="donut-card" data-format="png">PNG</button>
+            <button class="mini-btn export-btn" data-target="donut-card" data-format="jpg">JPG</button>
+          </div>
+        </div>
         <div id="donut-defectos" class="chart-panel"></div>
       </section>
 
+
       <section class="chart-card skeleton" id="group-card">
-        <h2>Nacimientos por tipo de parto e institución</h2>
+        <div class="card-header">
+          <h2>Nacimientos por tipo de parto e institución</h2>
+          <div class="export-actions">
+            <button class="mini-btn export-btn" data-target="group-card" data-format="png">PNG</button>
+            <button class="mini-btn export-btn" data-target="group-card" data-format="jpg">JPG</button>
+          </div>
+        </div>
         <div id="barras-grupo" class="chart-panel"></div>
       </section>
+
     </main>
 
     <div id="page-overlay" class="overlay hidden">

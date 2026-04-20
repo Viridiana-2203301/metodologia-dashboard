@@ -9,14 +9,18 @@ import {
   obtenerDefectoMasFrecuente,
   obtenerEstadoMayorTasa,
   TIPOS_DEFECTO,
+  ESTADOS_LISTA,
 } from "./data/transforms.js";
+
 import {
   getEstado,
   suscribir,
   setDatos,
   setError,
   setEstadoSeleccionado,
+  setEstadoComparacion,
   resetFiltros,
+
   setRangoAños,
   setSexo,
   setGrupoEda,
@@ -57,6 +61,9 @@ function actualizarDashboard() {
   const datosFiltrados = obtenerDatosFiltrados();
   if (!datosFiltrados) return;
 
+  // Remover efectos de carga (skeletons)
+  document.querySelectorAll(".skeleton").forEach((el) => el.classList.remove("skeleton"));
+
   const kpis = calcularKPIs(datosFiltrados);
   const estados = calcularPorEstado(datosFiltrados);
   const tendencias = calcularSeriesPorAño(datosFiltrados, filtros);
@@ -66,8 +73,9 @@ function actualizarDashboard() {
   renderKPIs(kpis);
   renderMapa("#mapa-mexico", mapaData, estados, filtros.estado, setEstadoSeleccionado);
   renderTopEstados("#top-estados", estados, filtros.estado, ordenAscendente, setEstadoSeleccionado);
-  renderLineaTendencia("#linea-tendencia", tendencias, filtros.estado);
+  renderLineaTendencia("#linea-tendencia", tendencias, filtros.estado, filtros.estadoB);
   renderDonut("#donut-defectos", defectos, filtros.estado);
+
   renderNacimientosAgrupados("#barras-grupo", agrupadoNac);
 }
 
@@ -94,8 +102,27 @@ async function initDashboard() {
         resetFiltros();
         ordenAscendente = false;
         ORDEN_TOGGLE.textContent = "Descendente";
+        document.getElementById("filtro-estado").value = "";
+        document.getElementById("filtro-estado-b").value = "";
       },
     });
+
+    // Poblar selectores de estado
+    const selA = document.getElementById("filtro-estado");
+    const selB = document.getElementById("filtro-estado-b");
+    ESTADOS_LISTA.forEach(edo => {
+      const optA = document.createElement("option");
+      optA.value = edo; optA.textContent = edo;
+      selA.appendChild(optA);
+      
+      const optB = document.createElement("option");
+      optB.value = edo; optB.textContent = edo;
+      selB.appendChild(optB);
+    });
+
+    selA.addEventListener("change", (e) => setEstadoSeleccionado(e.target.value));
+    selB.addEventListener("change", (e) => setEstadoComparacion(e.target.value));
+
 
     ORDEN_TOGGLE.addEventListener("click", () => {
       ordenAscendente = !ordenAscendente;
@@ -109,6 +136,26 @@ async function initDashboard() {
 
     EXPORT_PNG.addEventListener("click", async () => {
       await exportarImagen(document.querySelector(".page-shell"), "png", "dashboard-defectos-congenitos");
+    });
+
+    // Enlaces para exportación individual de gráficas
+    document.querySelectorAll(".export-btn").forEach((btn) => {
+      btn.addEventListener("click", async (e) => {
+        const targetId = btn.dataset.target;
+        const formato = btn.dataset.format;
+        const elemento = document.getElementById(targetId);
+        const titulo = elemento.querySelector("h2").textContent.toLowerCase().replace(/\s+/g, "-");
+        
+        // Ocultar botones temporalmente durante la captura
+        const actions = elemento.querySelector(".export-actions");
+        actions.style.display = "none";
+        
+        try {
+          await exportarImagen(elemento, formato, `grafico-${titulo}`);
+        } finally {
+          actions.style.display = "flex";
+        }
+      });
     });
 
     suscribir("datos", () => {

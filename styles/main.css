@@ -363,8 +363,33 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 14px;
-  gap: 10px;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+
+.card-header h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.export-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.export-btn {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  opacity: 0.6;
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+.export-btn:hover {
+  opacity: 1;
+  background: var(--surface-alt);
+  border-color: var(--accent);
 }
 
 .chart-panel {

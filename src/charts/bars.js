@@ -16,7 +16,11 @@ export function renderTopEstados(selector, estados, seleccionado, ascendente, on
   item.append("div").attr("class", "top-item-label").text((d, i) => `${i + 1}. ${d.estado}`);
   item.append("div").attr("class", "top-gap").append("div").attr("class", "top-bar").style("width", (d) => `${(d.tasa / maxTasa) * 100}%`).style("background", (d) => (d.estado === seleccionado ? "var(--accent)" : "#38bdf8"));
   item.append("div").attr("class", "top-item-value").text((d) => `${d.tasa.toFixed(2)}`);
+  
+  // Título de eje para Top Estados
+  contenedor.append("div").attr("class", "chart-axis-title-x").style("text-align", "center").style("margin-top", "12px").style("color", "#94a3b8").style("font-size", "11px").text("Tasa x 10,000 nacimientos");
 }
+
 
 export function renderNacimientosAgrupados(selector, datos) {
   const contenedor = d3.select(selector);
@@ -28,6 +32,7 @@ export function renderNacimientosAgrupados(selector, datos) {
     const card = chart.append("div").attr("class", "group-card");
     card.append("div").attr("class", "group-title").text(item.institucion);
     const bars = card.append("div").attr("class", "group-bars");
+    const row = bars.append("div").attr("class", "group-row");
     item.valores.forEach((serie) => {
       const row = bars.append("div").attr("class", "group-row");
       row.append("span").attr("class", "group-row-label").text(serie.label);
@@ -35,4 +40,8 @@ export function renderNacimientosAgrupados(selector, datos) {
       row.append("span").attr("class", "group-row-value").text(serie.valor.toLocaleString("es-MX"));
     });
   });
+  
+  // Título de eje para Nacimientos
+  contenedor.append("div").attr("class", "chart-axis-title-x").style("text-align", "center").style("margin-top", "12px").style("color", "#94a3b8").style("font-size", "11px").text("Cantidad de nacimientos por institución y tipo de parto");
 }
+
