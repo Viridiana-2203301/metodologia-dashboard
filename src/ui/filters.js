@@ -1,5 +1,3 @@
-const labelMin = document.getElementById("label-rango-min");
-const labelMax = document.getElementById("label-rango-max");
 const rangoMin = document.getElementById("rango-min");
 const rangoMax = document.getElementById("rango-max");
 const chipsContainer = document.getElementById("chips-tipos-defecto");
@@ -15,25 +13,25 @@ export function setupFiltros({ tiposDefecto, onSelectSexo, onSelectGrupo, onTogg
 }
 
 function setupRangoAños(onSetAños) {
-  labelMin.textContent = rangoMin.value;
-  labelMax.textContent = rangoMax.value;
-
   const actualizar = (event) => {
     let min = Number(rangoMin.value);
     let max = Number(rangoMax.value);
+    
     if (min > max) {
-      if (event.target === rangoMin) rangoMin.value = max;
-      else rangoMax.value = min;
+      if (event.target === rangoMin) {
+        rangoMax.value = min;
+      } else {
+        rangoMin.value = max;
+      }
       min = Number(rangoMin.value);
       max = Number(rangoMax.value);
     }
-    labelMin.textContent = rangoMin.value;
-    labelMax.textContent = rangoMax.value;
+    
     onSetAños(min, max);
   };
 
-  rangoMin.addEventListener("input", actualizar);
-  rangoMax.addEventListener("input", actualizar);
+  rangoMin.addEventListener("change", actualizar);
+  rangoMax.addEventListener("change", actualizar);
 }
 
 function setupToggleGroup(name, callback) {
