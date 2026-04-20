@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.agents/
+.gemini/
+node_modules/
+dist/
+build/
