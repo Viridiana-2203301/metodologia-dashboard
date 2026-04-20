@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Defectos Congénitos México</title>
+  <meta name="description" content="Dashboard interactivo de mortalidad por defectos congénitos en México 2021-2024." />
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Dashboard público</p>
+        <h1>Defectos congénitos en México</h1>
+        <p class="subtitle">Visualiza la tasa de mortalidad por defecto congénito y nacimientos por estado entre 2021 y 2024.</p>
+      </div>
+      <div class="top-actions">
+        <div class="export-global-bar">
+          <button id="export-pdf" class="action-btn">Exportar PDF</button>
+          <button id="export-dashboard-png" class="action-btn">Exportar PNG</button>
+        </div>
+        <button id="reset-filtros" class="action-btn action-reset">Reiniciar filtros</button>
+      </div>
+    </header>
+
+    <section class="filters-panel" aria-label="Controles de filtros">
+      <div class="filter-card">
+        <label for="rango-min">Año inicial</label>
+        <input id="rango-min" type="range" min="2021" max="2024" step="1" value="2021" />
+        <span id="label-rango-min">2021</span>
+      </div>
+      <div class="filter-card">
+        <label for="rango-max">Año final</label>
+        <input id="rango-max" type="range" min="2021" max="2024" step="1" value="2024" />
+        <span id="label-rango-max">2024</span>
+      </div>
+      <div class="filter-card">
+        <span class="filter-title">Sexo</span>
+        <div class="toggle-group" data-group="sexo" role="group" aria-label="Filtro de sexo">
+          <button data-sexo="null" class="toggle-btn active">Ambos</button>
+          <button data-sexo="F" class="toggle-btn">Femenino</button>
+          <button data-sexo="M" class="toggle-btn">Masculino</button>
+        </div>
+      </div>
+      <div class="filter-card">
+        <span class="filter-title">Grupo de edad materna</span>
+        <div class="toggle-group" data-group="edad" role="group" aria-label="Filtro de grupo de edad">
+          <button data-edad="null" class="toggle-btn active">Todos</button>
+          <button data-edad="Menor 20" class="toggle-btn">Menor 20</button>
+          <button data-edad="20-35" class="toggle-btn">20-35</button>
+          <button data-edad="Mayor 35" class="toggle-btn">Mayor 35</button>
+        </div>
+      </div>
+      <div class="filter-card filter-card-full">
+        <span class="filter-title">Tipos de defecto</span>
+        <div id="chips-tipos-defecto" class="chip-group" role="list"></div>
+      </div>
+    </section>
+
+    <main class="dashboard-grid" id="dashboard-root">
+      <section class="kpi-grid" id="kpi-grid" aria-label="KPI principales">
+        <div class="kpi-card skeleton"></div>
+        <div class="kpi-card skeleton"></div>
+        <div class="kpi-card skeleton"></div>
+        <div class="kpi-card skeleton"></div>
+        <div class="kpi-card skeleton"></div>
+        <div class="kpi-card skeleton"></div>
+      </section>
+
+      <section class="chart-card chart-card-wide skeleton" id="map-card">
+        <h2>Mapa coroplético por estado</h2>
+        <div id="mapa-mexico" class="chart-panel"></div>
+      </section>
+
+      <section class="chart-card skeleton" id="top-card">
+        <div class="card-header">
+          <h2>Top 15 estados por tasa</h2>
+          <button id="orden-toggle" class="mini-btn">Descendente</button>
+        </div>
+        <div id="top-estados" class="chart-panel"></div>
+      </section>
+
+      <section class="chart-card skeleton" id="line-card">
+        <h2>Tendencia temporal</h2>
+        <div id="linea-tendencia" class="chart-panel"></div>
+      </section>
+
+      <section class="chart-card skeleton" id="donut-card">
+        <h2>Distribución por tipo de defecto</h2>
+        <div id="donut-defectos" class="chart-panel"></div>
+      </section>
+
+      <section class="chart-card skeleton" id="group-card">
+        <h2>Nacimientos por tipo de parto e institución</h2>
+        <div id="barras-grupo" class="chart-panel"></div>
+      </section>
+    </main>
+
+    <div id="page-overlay" class="overlay hidden">
+      <div class="loader-card">
+        <p>Cargando datos y visualizaciones…</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
